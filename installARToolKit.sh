@@ -36,7 +36,7 @@ fi
 
 #readPrompt "Downlad ARToolKit from the SVN repository? " "n"
 #ARTOOLKITSVN=$result
-readPrompt "Do you want to see verbose installation progress? " "n"
+readPrompt "Do you want to see verbose installation progress? " "y"
 VERBOSE=$result
 if [ $VERBOSE == "n" ]; then VERBOSE=" > /dev/null"; else VERBOSE=""; fi
 
@@ -48,9 +48,8 @@ fi
 
 readPrompt "Add V4L2 support to ARToolKit? " "y"
 V4L2_SUPPORT=$result
-#readPrompt "Add OpenKinect (libfreenect) support to ARToolKit? " "y"
-#OPENKINECT_SUPPORT=$result
-OPENKINECT_SUPPORT="n"
+readPrompt "Add OpenKinect (libfreenect) support to ARToolKit? " "y"
+OPENKINECT_SUPPORT=$result
 
 eval "echo \"Updating apt database (may ask for your password)\" 2>&1 | tee $LOG_FILE $VERBOSE"
 eval "sudo apt-get update 2>&1 | tee $LOG_FILE $VERBOSE"
@@ -69,12 +68,11 @@ fi
 if [ ! -e ARToolKit ]; then
   eval "wget \"http://sourceforge.net/projects/artoolkit/files/artoolkit/2.72.1/ARToolKit-2.72.1.tgz/download\" -O ARToolKit-2.72.1.tgz 2>&1 | tee $LOG_FILE $VERBOSE"
   eval "tar xzvpf ARToolKit-2.72.1.tgz 2>&1 | tee $LOG_FILE $VERBOSE"
-## Download from the SVN repository
-#  eval "sudo apt-get install -y subversion 2>&1 | tee $LOG_FILE $VERBOSE"
-#  eval "svn co https://artoolkit.svn.sourceforge.net/svnroot/artoolkit/trunk ARToolKit 2>&1 | tee $LOG_FILE $VERBOSE"
-#  eval "mv -f ./ARToolKit/artoolkit/* ./ARToolKit 2>&1 | tee $LOG_FILE $VERBOSE"
-#  eval "rm -fR ./ARToolKit/artoolkit 2>&1 | tee $LOG_FILE $VERBOSE"
-###################################################################################
+# Download from the SVN repository
+  eval "sudo apt-get install -y subversion 2>&1 | tee $LOG_FILE $VERBOSE"
+  eval "svn co https://artoolkit.svn.sourceforge.net/svnroot/artoolkit/trunk ARToolKit 2>&1 | tee $LOG_FILE $VERBOSE"
+  eval "mv -f ./ARToolKit/artoolkit/* ./ARToolKit 2>&1 | tee $LOG_FILE $VERBOSE"
+  eval "rm -fR ./ARToolKit/artoolkit 2>&1 | tee $LOG_FILE $VERBOSE"
 fi
 
 cd ARToolKit
